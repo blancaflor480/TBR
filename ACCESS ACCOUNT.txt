@@ -1,0 +1,10 @@
+http://localhost/TBR/admin_login.php
+http://localhost/TBR/
+
+account user:
+u:user
+p:user
+
+account admin:
+u:admin
+p:admin
