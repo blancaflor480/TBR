@@ -2,12 +2,12 @@
 include('connection.php');
 session_start();
 
-if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['email'])) {
     header("Location: login.php");
     exit();
 }
 
-$username = $_SESSION['username'];
+$email = $_SESSION['email'];
 
 
 // Handle cancellation
@@ -15,9 +15,9 @@ if (isset($_POST['cancel_reservation'])) {
     $reservation_id = $_POST['reservation_id'];
     
     // Update the reservation status to 'Cancelled'
-    $cancel_query = "UPDATE tbl_reservation SET status = 'Cancelled' WHERE reservation_id = ? AND username = ? AND status = 'Pending'";
+    $cancel_query = "UPDATE tbl_reservation SET status = 'Cancelled' WHERE reservation_id = ? AND email = ? AND status = 'Pending'";
     $stmt = mysqli_prepare($conn, $cancel_query);
-    mysqli_stmt_bind_param($stmt, "ss", $reservation_id, $username);
+    mysqli_stmt_bind_param($stmt, "ss", $reservation_id, $email);
     
     if (mysqli_stmt_execute($stmt)) {
         $_SESSION['success'] = "Reservation successfully cancelled.";
@@ -150,9 +150,9 @@ if (isset($_POST['cancel_reservation'])) {
                 <?php endif; ?>
                 <div class="mt-4">
                 <?php
-                    $query = "SELECT * FROM tbl_reservation WHERE username = ? ORDER BY check_in_date DESC";
+                    $query = "SELECT * FROM tbl_reservation WHERE email = ? ORDER BY check_in_date DESC";
                     $stmt = mysqli_prepare($conn, $query);
-                    mysqli_stmt_bind_param($stmt, "s", $username);
+                    mysqli_stmt_bind_param($stmt, "s", $email);
                     mysqli_stmt_execute($stmt);
                     $result = mysqli_stmt_get_result($stmt);
 

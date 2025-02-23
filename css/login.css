@@ -1,0 +1,129 @@
+@font-face {
+  font-family: 'Poppins', sans-serif;
+  src: url('fonts/Poppins-Regular.otf');
+}
+
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-image: url('../img/TBR_BG.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-form {
+  background: rgba(255, 255, 255, 0.822);
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 450px;
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #7975fe;
+}
+
+.form-control:focus + label,
+.form-control:not(:placeholder-shown) + label {
+  top: -10px;
+  left: 10px;
+  font-size: 12px;
+  color: #7975fe;
+  background: white;
+  padding: 0 5px;
+}
+
+label {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 12px;
+  color: #999;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.button {
+  background: #7975fe;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.button:hover {
+  background: #6a67e0;
+}
+
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+.title {
+  text-align: center; /* Center the text */
+  margin-bottom: 20px; /* Add some space below the title */
+}
+
+.title .logo {
+  width: 170px; /* Set icon size */
+  height: 100px; /* Set icon size */
+  margin-bottom: 10px; /* Add space below the logo */
+}
+
+.title h4 {
+  margin: 0; /* Remove default margin for h4 */
+  font-size: 18px; /* Adjust font size */
+  color: #333; /* Set text color */
+  font-weight: bold;
+}
+
+.title span {
+  display: block; /* Make the span a block element */
+  font-size: 24px; /* Adjust font size */
+  font-weight: bold; /* Make the text bold */
+  color: #c0be47; /* Set text color */
+  margin-top: 5px; /* Reduce spacing between h4 and span */
+}
+.title p {
+  display: block; /* Make the span a block element */
+  font-size: 11px; /* Adjust font size */
+  color: black; /* Set text color */
+  margin-top: 5px; /* Reduce spacing between h4 and span */
+}

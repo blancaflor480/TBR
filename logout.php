@@ -1,6 +1,6 @@
 <?php 
 session_start();
-unset($_SESSION["username"]);
+unset($_SESSION["email"]);
 ?>
 <script>
 	window.location="index.php";

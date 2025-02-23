@@ -21,15 +21,21 @@ function getNextReservationId($conn) {
   return sprintf("RS_%d", $next_id);
 }
 
+
+
 // Generate the next ID before the form is rendered
 $next_reservation_id = getNextReservationId($conn);
 // Get the username from the session
-if (!isset($_SESSION['username'])) {
+$email = $_SESSION['email'];
+$user_query = mysqli_query($conn, "SELECT * FROM tbl_user_credentials WHERE email = '$email'");
+$user_data = mysqli_fetch_assoc($user_query);
+
+if (!isset($_SESSION['email'])) {
   // Redirect to login page if user is not logged in
   header("Location: index.php");
   exit();
 }
-$username = $_SESSION['username'];
+$email = $_SESSION['email'];
 
 ?>
 
@@ -86,89 +92,127 @@ $username = $_SESSION['username'];
 </div>
 
 
-            <form action="" method="post">  
+<form action="" method="post">  
                 <div class="modal-header">
-                    <h4 class="modal-title">Add New Reservation</h4>
+                    <h4 class="modal-title">Add New Reservation Form</h4>
                 </div>
                 <div class="modal-body">
                     <!-- Fields for tbl_reservation -->
                     <?php 
+                    echo "<div class='form-group'>
+                            <label for='reservation_id'>Reservation ID:</label>
+                            <input type='text' name='reservation_id' class='form-control' value='$next_reservation_id' readonly required>
+                          </div>";
+                    
+                    // Name fields in a single row
+                    echo "<div class='form-row'>
+                            <div class='form-group col-md-4'>
+                                <label for='first_name'>First Name:</label>
+                                <input type='text' name='first_name' class='form-control' value='" . $user_data['first_name'] . "' required>
+                            </div>
+                            <div class='form-group col-md-4'>
+                                <label for='middle_name'>Middle Name:</label>
+                                <input type='text' name='middle_name' class='form-control' value='" . $user_data['middle_name'] . "' required>
+                            </div>
+                            <div class='form-group col-md-4'>
+                                <label for='last_name'>Last Name:</label>
+                                <input type='text' name='last_name' class='form-control'  value='" . $user_data['last_name'] . "'  required >
+                                
+                            </div>
+                          </div>";
 
-echo "<div class='form-group'>
-        <label for='reservation_id'>Reservation ID:</label>
-        <input type='text' name='reservation_id' class='form-control' value='$next_reservation_id' readonly required>
-      </div>";
-      
+                          echo "<div class='form-row'>
+                          <div class='form-group col-md-4'>
+                              <label for='Age'>Age:</label>
+                              <input type='number' name='age' class='form-control' required>
+                          </div>
+                          <div class='form-group col-md-4'>
+                              <label for='nationality'>Nationality:</label>
+                              <input type='text' name='nationality' class='form-control'>
+                          </div>
+                          <div class='form-group col-md-4'>
+                              <label for='contact_number'>Contact Number:</label>
+                              <input type='number' name='contact_number' class='form-control'>
+                          </div>
+                         
+                        </div>";
+                    // Other fields
                     $fields = [
-                        'first_name' => 'First Name',
-                        'middle_name' => 'Middle Name',
-                        'last_name' => 'Last Name',
-                        'age' => 'Age',
-                        'contact_number' => 'Contact Number',
-                        'address' => 'Address',
-                        'nationality' => 'Nationality',
-                        'no_of_guest' => 'Number of Guests',
-
-                        'additional_guests' => 'Additional Guests'
-                        
+                        'address' => 'Address'
+                  
+                      
                     ];
-                    // Render regular fields
+
                     foreach ($fields as $name => $label) {
                         echo "<div class='form-group'>
                                 <label for='$name'>$label:</label>
                                 <input type='text' name='$name' class='form-control' required>
                               </div>";
                     }
+                    
+                    echo "<div class='form-row'>
+                    <div class='form-group col-md-4'>
+                        <label for='gender'>Gender:</label>
+                       <select name='gender' class='form-control' required>
+                                <option value=''>Select Here</option>
+                                <option value='Male'>Male</option>
+                                <option value='Female'>Female</option>
+                            </select>
+                    </div>
+                    <div class='form-group col-md-4'>
+                        <label for='no_of_guest'>Number of Guests:</label>
+                        <input type='number' name='no_of_guest' class='form-control' required>
+                    </div>
+                    <div class='form-group col-md-4'>
+                        <label for='additional_guests'>Additional Guests:</label>
+                        <input type='number' name='additional_guests' class='form-control'>
+                    </div>
+                  </div>";
+
+
+                  echo "<div class='form-row'>
+                  <div class='form-group col-md-6'>
+                      <label for='check_in_date'>Check-In Date:</label>
+                            <input type='date' name='check_in_date' class='form-control' required>
+                  </div>
+                  <div class='form-group col-md-6'>
+                      <label for='check_in_time'>Check-In Time:</label>
+                            <input type='time' name='check_in_time' class='form-control' required>
+                  </div>
+                </div>";
+
+                echo "<div class='form-row'>
+                  <div class='form-group col-md-6'>
+                      <label for='check_out_date'>Check-Out Date:</label>
+                            <input type='date' name='check_out_date' class='form-control' required>
+                  </div>
+                  <div class='form-group col-md-6'>
+                      <label for='check_out_time'>Check-Out Time:</label>
+                            <input type='time' name='check_out_time' class='form-control' required>
+                  </div>
+                </div>";
+
+
                     echo "<div class='form-group'>
-        <label for='gender'>Gender:</label>
-        <select name='gender' class='form-control' required>
-            <option value=''>Select Gender</option>
-            <option value='Male'>Male</option>
-            <option value='Female'>Female</option>
-        </select>
-      </div>";
-      
-      echo "<div class='form-group'>
-        <label for='check_in_date'>Check-In Date:</label>
-        <input type='date' name='check_in_date' class='form-control' required>
-      </div>
-      <div class='form-group'>
-        <label for='check_in_time'>Check-In Time:</label>
-        <input type='time' name='check_in_time' class='form-control' required>
-      </div>";
+                            <label for='sub_total'>Subtotal:</label>
+                            <input type='text' name='sub_total' class='form-control' readonly>
+                          </div>";
 
-// Check-out date and time
-echo "<div class='form-group'>
-        <label for='check_out_date'>Check-Out Date:</label>
-        <input type='date' name='check_out_date' class='form-control' required>
-      </div>
-      <div class='form-group'>
-        <label for='check_out_time'>Check-Out Time:</label>
-        <input type='time' name='check_out_time' class='form-control' required>
-      </div>";
+                    echo "<div class='form-group'>
+                            <label for='total'>Total:</label>
+                            <input type='text' name='total' class='form-control' readonly>
+                          </div>";
 
-  echo "<div class='form-group'>
-      <label for='sub_total'>Subtotal:</label>
-      <input type='text' name='sub_total' class='form-control' readonly>
-  </div>";
-
-  echo "<div class='form-group'>
-      <label for='total'>Total:</label>
-      <input type='text' name='total' class='form-control' readonly>
-  </div>";
-
-// Status dropdown (assuming you want this as a dropdown as well)
-echo "<div class='form-group'>
-        <label for='status'>Status:</label>
-        <input type='hidden' name='status' value='Pending'>
-        <input type='text' class='form-control' value='Pending' readonly>
-      </div>";
-
-
+                    echo "<div class='form-group'>
+                            <label for='status'>Status:</label>
+                            <input type='hidden' name='status' value='Pending'>
+                            <input type='text' class='form-control' value='Pending' readonly>
+                          </div>";
                     ?>
 
                     <!-- Cottage Checkboxes -->
-                    <div class="form-group">
+                     <div class="form-row">
+                    <div class="form-group col-md-4">
                         <label>Cottage:</label><br>
                         <label><input type="checkbox" name="cottage" value="Pavillion"> Pavillion</label><br>
                         <label><input type="checkbox" name="cottage" value="Small Hut"> Small Hut</label><br>
@@ -179,7 +223,7 @@ echo "<div class='form-group'>
                     </div>
 
                     <!-- Rooms Checkboxes -->
-                    <div class="form-group">
+                    <div class="form-group col-md-4">
                         <label>Rooms:</label><br>
                         <label><input type="checkbox" name="rooms" value="Aircon Room (Family)"> Aircon Room (Family)</label><br>
                         <label><input type="checkbox" name="rooms" value="Aircon Room (Standard)"> Aircon Room (Standard)</label><br>
@@ -187,7 +231,7 @@ echo "<div class='form-group'>
                     </div>
 
                     <!-- Recreational Activity Checkboxes -->
-                    <div class="form-group">
+                    <div class="form-group col-md-4">
                         <label>Recreational Activities:</label><br>
                         <label><input type="checkbox" name="recreational_activity" value="Banana Boat"> Banana Boat</label><br>
                         <label><input type="checkbox" name="recreational_activity" value="Island Hopping"> Island Hopping</label><br>
@@ -197,6 +241,7 @@ echo "<div class='form-group'>
                         <label><input type="checkbox" name="recreational_activity" value="Bonfire"> Bonfire</label><br>
                         <label><input type="checkbox" name="recreational_activity" value="Volleyball"> Volleyball</label>
                     </div>
+                    </div>
 
                     <!-- Other Amenities Checkboxes -->
                     <div class="form-group">
@@ -204,11 +249,12 @@ echo "<div class='form-group'>
                         <label><input type="checkbox" name="other_amenities" value="Catering"> Catering</label><br>
                         <label><input type="checkbox" name="other_amenities" value="Light and Sounds Rental"> Light and Sounds Rental</label>
                     </div>
-                    <div class="form-group">
+                    <center>
+                    <div class="form-group ">
                         <button type="submit" name="addData" class="btn btn-primary">Add Reservation</button>
                     </div>
+                    </center>
                 </div>
-                
             </form>
  
 
@@ -216,67 +262,12 @@ echo "<div class='form-group'>
 
 
 
-                <!-- Update Modal -->
-                <div id="editBtnAdmin" class="modal fade" role="">
-                  <div class="modal-dialog">
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                      <form action="" method="post">
-                      <div class="modal-header">
-                        <h4 class="modal-title">Update Damage</h4>
-                      </div>     
-                      <div class="modal-body">      
-                        <input id="update_admin_id" name="update_admin_id" type="hidden">
-                            
-                           <div class="form-group">
-                              <label for="usr">City</label>
-                              <input type="text" name="city" id="city" class="form-control">
-                            </div>    
-                            <div class="form-group">
-                              <label for="usr">Total:</label>
-                              <input type="text" name="total" id="total" class="form-control">
-                            </div>
-                            <div class="form-group">
-                              <label for="usr">Description:</label>
-                              <input type="text" name="description" id="description" class="form-control">
-                            </div>
-                            <div class="form-group">
-                              <label for="usr">Areas:</label>
-                              <input type="text" name="areas" id="areas" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="modal-footer">
-                          <button type="submit" name="updateData" class="btn btn-primary">Update</button>
-                          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>     
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>     
+              
                 <!-- End of Update Modal -->
 
 
                 <!-- Delete Modal -->
-                <div id="deleteAdmin" class="modal fade fontStyle" role="dialog">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                          <h4 class="modal-title">Delete Damage</h4>
-                        </div>
-                      <form action="" method="post">
-                        <div class="modal-body">
-                          <input id="delete_id" name="delete_id" type="hidden">
-                          <p>Are you sure you want to delete this Damage?</p>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="submit" name="deleteData" class="btn btn-danger">Delete</button>
-                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                      </form>
-                    </div>  
-                  </div>
-                </div>
+              
                 <?php
                       // Check if the success message is set in the session and display it
                       if (isset($_SESSION['success'])) {
@@ -294,7 +285,7 @@ echo "<div class='form-group'>
        if (isset($_POST["addData"])) {
            // Collect data from the form
            $reservation_id = $_POST['reservation_id'];
-           $username = $_SESSION['username'];
+           $email = $_SESSION['email'];
            $first_name = $_POST['first_name'];
            $middle_name = $_POST['middle_name'];
            $last_name = $_POST['last_name'];
@@ -330,12 +321,12 @@ echo "<div class='form-group'>
            } else {
                // Insert new reservation data
                $query_insert = mysqli_query($conn, "INSERT INTO tbl_reservation (
-                   reservation_id, username,first_name, middle_name, last_name, age, gender, contact_number, 
+                   reservation_id, email,first_name, middle_name, last_name, age, gender, contact_number, 
                    address, nationality, no_of_guest, check_in_date, check_out_date, check_in_time, 
                    check_out_time, status, additional_guests, cottage, rooms, recreational_activity, 
                    other_amenities, sub_total, total
                ) VALUES (
-                   '$reservation_id', '$username','$first_name', '$middle_name', '$last_name', '$age', '$gender', 
+                   '$reservation_id', '$email','$first_name', '$middle_name', '$last_name', '$age', '$gender', 
                    '$contact_number', '$address', '$nationality', '$no_of_guest', '$check_in_date', 
                    '$check_out_date', '$check_in_time', '$check_out_time', '$status', '$additional_guests', 
                    '$cottage', '$rooms', '$recreational_activity', '$other_amenities', '$sub_total', '$total'

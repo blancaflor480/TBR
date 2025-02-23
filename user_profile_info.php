@@ -3,7 +3,7 @@
 session_start();
 
  
-  $username_session = $_SESSION['username']; //getting information of the user
+  $email_session = $_SESSION['email']; //getting information of the user
 
 ?>
 
@@ -38,10 +38,10 @@ session_start();
         $last_name = $_POST['last_name'];
         $first_name = $_POST['first_name'];
         $middle_name = $_POST['middle_name'];
-        $username = $_POST['username'];
+        $email = $_POST['email'];
         $password = $_POST['password'];
         $query = mysqli_query($conn, "UPDATE tbl_user_credentials SET last_name='$last_name', first_name='$first_name', middle_name='$middle_name', 
-        username='$username_session', password='$password' WHERE username='$username'");
+        email='$email_session', password='$password' WHERE email='$email'");
         if($query) 
         {
             echo '<div class="alert alert-success" style="width: 100% !important; ">
@@ -58,7 +58,7 @@ session_start();
 
 <!-- <button class="btn btn-primary btn-sm " data-toggle="modal" data-target="#addBtn">Update Information</button>             -->
  <?php 
-      if(!isset($_SESSION['username'])) { ?>
+      if(!isset($_SESSION['email'])) { ?>
 
      <p class="text-center">In order to use this part of the reservation system, you must log in first.</p>
         
@@ -66,7 +66,7 @@ session_start();
     <?php  } 
 
       else{
-        $infoUser = mysqli_query($conn, "SELECT * from tbl_user_credentials where username = '$username_session'");
+        $infoUser = mysqli_query($conn, "SELECT * from tbl_user_credentials where email = '$email_session'");
         while($row = mysqli_fetch_array($infoUser)) { ?>
        
     <form action="" method="post">
@@ -87,8 +87,8 @@ session_start();
           </div>
 
           <div class="form-group mt-2">
-            <label for="usr">Username:</label>
-                  <input type="text" class="form-control form-control-sm" name="username" readonly id="username" required value="<?php echo $row['username']; ?>">
+            <label for="usr">Email:</label>
+                  <input type="email" class="form-control form-control-sm" name="email" readonly id="username" required value="<?php echo $row['email']; ?>">
           </div>
       
 
