@@ -94,9 +94,9 @@ $email = $_SESSION['email'];
 
 <form action="" method="post">  
                 <div class="modal-header">
-                    <h4 class="modal-title">Add New Reservation Form</h4>
+                    <h4 class="modal-title" style="font-weight: bold;">Add New Reservation Form</h4>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="">
                     <!-- Fields for tbl_reservation -->
                     <?php 
                     echo "<div class='form-group'>
@@ -107,15 +107,15 @@ $email = $_SESSION['email'];
                     // Name fields in a single row
                     echo "<div class='form-row'>
                             <div class='form-group col-md-4'>
-                                <label for='first_name'>First Name:</label>
+                                <label for='first_name'>First Name: <span style='color: red'>*</span></label>
                                 <input type='text' name='first_name' class='form-control' value='" . $user_data['first_name'] . "' required>
                             </div>
                             <div class='form-group col-md-4'>
-                                <label for='middle_name'>Middle Name:</label>
+                                <label for='middle_name'>Middle Name: <span style='color: red'>*</span></label>
                                 <input type='text' name='middle_name' class='form-control' value='" . $user_data['middle_name'] . "' required>
                             </div>
                             <div class='form-group col-md-4'>
-                                <label for='last_name'>Last Name:</label>
+                                <label for='last_name'>Last Name: <span style='color: red'>*</span></label>
                                 <input type='text' name='last_name' class='form-control'  value='" . $user_data['last_name'] . "'  required >
                                 
                             </div>
@@ -123,15 +123,27 @@ $email = $_SESSION['email'];
 
                           echo "<div class='form-row'>
                           <div class='form-group col-md-4'>
-                              <label for='Age'>Age:</label>
+                              <label for='Age'>Age: <span style='color: red'>*</span></label>
                               <input type='number' name='age' class='form-control' required>
                           </div>
                           <div class='form-group col-md-4'>
-                              <label for='nationality'>Nationality:</label>
-                              <input type='text' name='nationality' class='form-control'>
+                              <label for='nationality'>Nationality: <span style='color: red'>*</span></label>
+                              <select name='nationality' class='form-control' required>
+                               <option value=''>Select Here</option>
+                                  <option value='Filipino'>Filipino</option>
+                                  <option value='American'>American</option>
+                                  <option value='Canadian'>Canadian</option>
+                                  <option value='Japanese'>Japanese</option>
+                                  <option value='Chinese'>Chinese</option>
+                                  <option value='Korean'>Korean</option>
+                                  <option value='Indian'>Indian</option>
+                                  <option value='French'>French</option>
+                                  <option value='German'>German</option>
+                                  <option value='Other'>Other</option>
+                            </select>
                           </div>
                           <div class='form-group col-md-4'>
-                              <label for='contact_number'>Contact Number:</label>
+                              <label for='contact_number'>Contact Number: <span style='color: red'>*</span></label>
                               <input type='number' name='contact_number' class='form-control'>
                           </div>
                          
@@ -152,7 +164,7 @@ $email = $_SESSION['email'];
                     
                     echo "<div class='form-row'>
                     <div class='form-group col-md-4'>
-                        <label for='gender'>Gender:</label>
+                        <label for='gender'>Gender: <span style='color: red'>*</span></label>
                        <select name='gender' class='form-control' required>
                                 <option value=''>Select Here</option>
                                 <option value='Male'>Male</option>
@@ -160,11 +172,11 @@ $email = $_SESSION['email'];
                             </select>
                     </div>
                     <div class='form-group col-md-4'>
-                        <label for='no_of_guest'>Number of Guests:</label>
+                        <label for='no_of_guest'>Number of Guests: <span style='color: red'>*</span></label>
                         <input type='number' name='no_of_guest' class='form-control' required>
                     </div>
                     <div class='form-group col-md-4'>
-                        <label for='additional_guests'>Additional Guests:</label>
+                        <label for='additional_guests'>Additional Guests: <span style='color: red'>*</span></label>
                         <input type='number' name='additional_guests' class='form-control'>
                     </div>
                   </div>";
@@ -172,39 +184,39 @@ $email = $_SESSION['email'];
 
                   echo "<div class='form-row'>
                   <div class='form-group col-md-6'>
-                      <label for='check_in_date'>Check-In Date:</label>
+                      <label for='check_in_date'>Check-In Date: <span style='color: red'>*</span></label>
                             <input type='date' name='check_in_date' class='form-control' required>
                   </div>
                   <div class='form-group col-md-6'>
-                      <label for='check_in_time'>Check-In Time:</label>
+                      <label for='check_in_time'>Check-In Time: <span style='color: red'>*</span></label>
                             <input type='time' name='check_in_time' class='form-control' required>
                   </div>
                 </div>";
 
                 echo "<div class='form-row'>
                   <div class='form-group col-md-6'>
-                      <label for='check_out_date'>Check-Out Date:</label>
+                      <label for='check_out_date'>Check-Out Date: <span style='color: red'>*</span></label>
                             <input type='date' name='check_out_date' class='form-control' required>
                   </div>
                   <div class='form-group col-md-6'>
-                      <label for='check_out_time'>Check-Out Time:</label>
+                      <label for='check_out_time'>Check-Out Time: <span style='color: red'>*</span></label>
                             <input type='time' name='check_out_time' class='form-control' required>
                   </div>
                 </div>";
 
 
                     echo "<div class='form-group'>
-                            <label for='sub_total'>Subtotal:</label>
+                            <label for='sub_total'>Subtotal: </label>
                             <input type='text' name='sub_total' class='form-control' readonly>
                           </div>";
 
                     echo "<div class='form-group'>
-                            <label for='total'>Total:</label>
+                            <label for='total'>Total: </label>
                             <input type='text' name='total' class='form-control' readonly>
                           </div>";
 
                     echo "<div class='form-group'>
-                            <label for='status'>Status:</label>
+                            <label for='status'>Status: </label>
                             <input type='hidden' name='status' value='Pending'>
                             <input type='text' class='form-control' value='Pending' readonly>
                           </div>";
@@ -251,7 +263,8 @@ $email = $_SESSION['email'];
                     </div>
                     <center>
                     <div class="form-group ">
-                        <button type="submit" name="addData" class="btn btn-primary">Add Reservation</button>
+                        <button type="submit" name="addData" class="btn btn-primary">Add Reservation</button>&nbsp;
+                        <button type="reset"  class="btn btn-danger">Reset</button>
                     </div>
                     </center>
                 </div>
