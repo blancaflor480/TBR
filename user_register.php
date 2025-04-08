@@ -18,9 +18,10 @@ if (isset($_POST["addUser"])) {
         $_SESSION['danger'] = 'The email already exists!';
         echo '<script> window.location="user_register.php";</script>';
     } else {
-        // Insert new user
-        $query_insert = mysqli_query($conn, "INSERT INTO tbl_user_credentials 
-            VALUES('', '$last_name', '$first_name', '$middle_name', '$email', '$password')");
+        $query_insert = mysqli_query($conn, 
+        "INSERT INTO tbl_user_credentials (last_name, first_name, middle_name, email, password) 
+         VALUES ('$last_name', '$first_name', '$middle_name', '$email', '$password')");
+    
         
         if ($query_insert) {
             $_SESSION['success'] = 'Registered Successfully!';
